@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InstaQuiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background-color 0.3s ease;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-left: 20px;
+            transition: color 0.3s ease;
+        }
+        .logo:hover{
+          color:#2ecc71;
+        }
+
+        header nav {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+        header nav p{
+            margin-right: 20px;
+            transition: color 0.3s ease;
+        }
+        header nav p:hover{
+          color: #2ecc71;
+        }
+
+        .signup-button {
+            background-color: #2ecc71;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .signup-button:hover {
+            background-color: #27ae60;
+            transform: scale(1.05);
+        }
+
+        main {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .placeholder-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .placeholder-container:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Add a wave effect */
+        .placeholder-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.05), transparent);
+            animation: wave 3s linear infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .placeholder-title{
+           margin: 0;
+            font-size: 1.7em;
+           font-weight: 600;
+           color: #2c3e50;
+            position: relative;
+           z-index: 2;
+        }
+
+        @keyframes wave {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+
+        .filter-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            width: 90%;
+            max-width: 1000px;
+        }
+
+        .filter-container label {
+            margin-right: 10px;
+        }
+
+        .filter-container select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 0px;
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #ddd;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            position: relative;
+        }
+
+        .card:hover {
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+          transform: scale(1.03);
+        }
+        .card-header{
+            background-color: #f0f0f0;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .card img {
+          width: 100%;
+          height: auto;
+          display: block;
+          border-bottom: 1px solid #eee;
+          transition: transform 0.3s ease;
+        }
+        .card:hover img{
+          transform: scale(1.05);
+        }
+        .card-title{
+            font-weight: bold;
+            padding: 10px;
+            font-size: 1em;
+            line-height: 1.3;
+             transition: color 0.3s ease;
+        }
+        .card:hover .card-title{
+          color: #2ecc71;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        .download-button {
+            background-color: #3498db;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+        }
+        .download-button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+        .whatsapp-chat{
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          z-index: 1000;
+        }
+        .whatsapp-chat a{
+         display: flex;
+          background-color: #25D366;
+          color: white;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          justify-content: center;
+          align-items: center;
+          text-decoration: none;
+          transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .whatsapp-chat a:hover{
+          background-color: #128C7E;
+           transform: scale(1.1);
+        }
+        .whatsapp-chat i{
+          font-size: 2em;
+        }
+        footer {
+            background-color: #34495e;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+        footer:hover{
+          background-color: #2c3e50;
+        }
+
+        .footer-content{
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         max-width: 1000px;
+         margin: 0 auto;
+         padding: 0 20px;
+        }
+        footer ul{
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+        footer ul li{
+         display: inline;
+         margin: 0 10px;
+        }
+        footer ul li a{
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        footer ul li a:hover{
+         text-decoration: underline;
+          color: #2ecc71;
+        }
+        /* Card brand */
+        .card-brand {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #3498db;
+            color: white;
+            padding: 5px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .card:hover .card-brand{
+           background-color: #2ecc71;
+            color: #2c3e50;
+        }
+        /* Job Openings Table */
+        .job-openings-container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .job-openings-container:hover{
+         transform: translateY(-5px);
+         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .job-openings-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .job-openings-table th, .job-openings-table td{
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s ease;
+        }
+        .job-openings-table th:hover, .job-openings-table td:hover{
+          background-color: #f0f0f0;
+        }
+        .job-openings-table th{
+          background-color: #f0f0f0;
+          font-weight: bold;
+        }
+        .job-openings-table tbody tr:hover {
+          background-color: #f9f9f9;
+        }
+
+        /* Apply Button Styles */
+        .apply-button {
+            background-color: #2ecc71;
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+            font-size: 0.9em;
+        }
+        .apply-button:hover {
+            background-color: #27ae60;
+              transform: scale(1.05);
+        }
+        .download-notification-button{
+            background-color: #e74c3c;
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+            font-size: 0.9em;
+        }
+        .download-notification-button:hover{
+         background-color: #c0392b;
+          transform: scale(1.05);
+        }
+        /* Media Queries for Responsive Design */
+        @media (max-width: 768px) {
+            header{
+                flex-direction: column;
+                text-align: center;
+            }
+            header nav{
+                flex-direction: column;
+            }
+            header nav p{
+                margin: 10px 0;
+            }
+             .filter-container {
+                 flex-direction: column;
+                 align-items: flex-start;
+                 width: 95%;
+             }
+
+             .filter-container label {
+                 margin-bottom: 5px;
+             }
+
+             .filter-container select {
+                 width: 100%;
+             }
+
+            .cards-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .card{
+                width: 90%;
+            }
+              .job-openings-container{
+                   width: 95%;
+              }
+            .footer-content {
+                flex-direction: column;
+            }
+            footer ul {
+             margin-top: 10px;
+            }
+            footer ul li{
+                display: block;
+                margin: 5px 0;
+            }
+            .whatsapp-chat {
+              bottom: 10px;
+              right: 10px;
+             }
+              .job-openings-table {
+                  font-size: 0.9em;
+              }
+              .job-openings-table th, .job-openings-table td{
+                  padding: 8px;
+                }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">InstaQuiz</div>
+        <nav>
+            <p>All India Entrance Exams & Competitive Exams Daily Current Affairs</p>
+            <a href="https://forms.gle/njeZmo89sP9ysu2EA" class="signup-button">Sign Up</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="filter-container">
+            <label for="filter">Filter Content:</label>
+            <select id="filter">
+                <option value="all">All</option>
+                <option value="neet">NEET</option>
+                <option value="jee">JEE</option>
+                <option value="highschool">High School</option>
+                <option value="competitive">Competitive Exams</option>
+            </select>
+        </div>
+        <div class="placeholder-container">
+             <h2 class="placeholder-title">Latest Updates</h2>
+        </div>
+
+       <div class="cards-container">
+            <!-- Card 1 -->
+            <div class="card" data-category="neet">
+               <span class="card-brand">InstaQuiz</span>
+               <img src="https://i.ibb.co/n8X24nL/Key-Tips-for-NEET-and-JEE-Preparation.png" alt="Key Tips for NEET and JEE Preparation">
+                <p class="card-title">Key Tips for NEET and JEE Preparation</p>
+                <div class="button-container">
+                <a href="https://rzp.io/rzp/Sc3hktb" target="_blank" class="download-button">Download PDF (₹9)</a>
+                </div>
+              </div>
+            <!-- Card 2 -->
+            <div class="card" data-category="highschool">
+              <span class="card-brand">InstaQuiz</span>
+               <img src="https://i.ibb.co/7y9005j/Important-Study-Tips-for-High-School-Students.png" alt="Important Study Tips for High School Students">
+                <p class="card-title">Important Study Tips for High School Students</p>
+                <div class="button-container">
+                <a href="https://rzp.io/rzp/Sc3hktb" target="_blank" class="download-button">Download PDF (₹9)</a>
+                </div>
+            </div>
+             <!-- Card 3 -->
+             <div class="card" data-category="jee">
+                <span class="card-brand">InstaQuiz</span>
+                <img src="https://i.ibb.co/QYg6YjC/JEE-Main-2025-Top-5-Tips-for-High-Scoring.png" alt="JEE Main 2025: Top 5 Tips for High-Scoring">
+                 <p class="card-title">JEE Main 2025: Top 5 Tips for High-Scoring</p>
+                 <div class="button-container">
+                    <a href="https://rzp.io/rzp/Sc3hktb" target="_blank" class="download-button">Download PDF (₹9)</a>
+                 </div>
+             </div>
+             <!-- Card 4 -->
+             <div class="card" data-category="competitive">
+                <span class="card-brand">InstaQuiz</span>
+                <img src="https://i.ibb.co/z20m4fK/Competitive-Exams-2025-Structured-Study-Plan-for-Success.png" alt="Competitive Exams 2025: Structured Study Plan for Success">
+                  <p class="card-title">Competitive Exams 2025: Structured Study Plan for Success</p>
+                 <div class="button-container">
+                   <a href="https://rzp.io/rzp/Sc3hktb" target="_blank" class="download-button">Download PDF (₹9)</a>
+                </div>
+             </div>
+
+       </div>
+
+       <div class="job-openings-container">
+        <h2>Job Openings</h2>
+        <table class="job-openings-table">
+            <thead>
+                <tr>
+                  <th>Position</th>
+                  <th>Location</th>
+                    <th>Department</th>
+                     <th>Apply With Us (₹89)</th>
+                     <th>Download Notification</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                     <td>Software Engineer</td>
+                     <td>Bangalore</td>
+                     <td>Technology</td>
+                     <td><a href="https://rzp.io/rzp/Sc3hktb" target="_blank" class="apply-button">Apply Now</a></td>
+                      <td><a href="#" class="download-notification-button">Download</a></td>
+                </tr>
+                <tr>
+                  <td>Marketing Manager</td>
+                  <td>Delhi</td>
+                   <td>Marketing</td>
+                  <td><a href="https://rzp.io/rzp/Sc3hktb" target="_blank" class="apply-button">Apply Now</a></td>
+                   <td><a href="#" class="download-notification-button">Download</a></td>
+                </tr>
+                <tr>
+                 <td>Content Writer</td>
+                  <td>Remote</td>
+                 <td>Content</td>
+                  <td><a href="https://rzp.io/rzp/Sc3hktb" target="_blank" class="apply-button">Apply Now</a></td>
+                   <td><a href="#" class="download-notification-button">Download</a></td>
+                </tr>
+                <tr>
+                 <td>Data Analyst</td>
+                  <td>Hyderabad</td>
+                  <td>Analytics</td>
+                 <td><a href="https://rzp.io/rzp/Sc3hktb" target="_blank" class="apply-button">Apply Now</a></td>
+                    <td><a href="#" class="download-notification-button">Download</a></td>
+                </tr>
+                 <tr>
+                    <td>UI/UX Designer</td>
+                    <td>Mumbai</td>
+                    <td>Design</td>
+                     <td><a href="https://rzp.io/rzp/Sc3hktb" target="_blank" class="apply-button">Apply Now</a></td>
+                      <td><a href="#" class="download-notification-button">Download</a></td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+
+       <div class="whatsapp-chat">
+       <a href="https://wa.me/919380002829" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+        </a>
+        </div>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+            <p>© 2023 InstaQuiz. All rights reserved.</p>
+            <ul>
+                <li><a href="#">UPSC</a></li>
+                <li><a href="#">SSC</a></li>
+                <li><a href="#">Bank Exams</a></li>
+                <li><a href="#">Railway Exams</a></li>
+                <li><a href="#">State PSC</a></li>
+            </ul>
+      </div>
+
+    </footer>
+    <script>
+         document.getElementById('filter').addEventListener('change', function() {
+            const selectedCategory = this.value;
+            const cards = document.querySelectorAll('.card');
+
+            cards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                if (selectedCategory === 'all' || cardCategory === selectedCategory) {
+                  card.style.display = 'flex';
+                } else {
+                  card.style.display = 'none';
+                }
+             });
+        });
+    </script>
+</body>
+</html>
